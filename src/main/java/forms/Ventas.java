@@ -1150,6 +1150,11 @@ public class Ventas extends javax.swing.JPanel {
         });
 
         btnPrintAll.setText("Imprimir todo");
+        btnPrintAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintAllActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel14.setText("Venta total: $");
@@ -2003,6 +2008,11 @@ public class Ventas extends javax.swing.JPanel {
     private void txtMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMonthActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMonthActionPerformed
+
+    private void btnPrintAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintAllActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"Aun en desarrollo!!", "Proximamente", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnPrintAllActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
