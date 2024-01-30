@@ -18,13 +18,12 @@ public class DatabaseConnection {
 
     public Connection connect() {
         try {
-            File dbFile = new File("src/main/java/resources/catalogo.db");
+            File dbFile = new File("src/main/java/resources/db_sistema.db");
             String jdbcUrl = "jdbc:sqlite:" + dbFile.getAbsolutePath();
             
             conn = DriverManager.getConnection(jdbcUrl);
-            System.out.println("Conexión a SQLite establecida.");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error en Connexion: "+ e.getMessage());
         }
         return conn;
     }
