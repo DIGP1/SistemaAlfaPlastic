@@ -703,6 +703,13 @@ public class Ventas extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         lblNumberOrder = new javax.swing.JLabel();
         btnRestablecer = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        txtDay = new javax.swing.JTextField();
+        txtMonth = new javax.swing.JTextField();
+        txtYear = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        lblMes = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNumeroPedido = new javax.swing.JTextField();
@@ -1161,6 +1168,20 @@ public class Ventas extends javax.swing.JPanel {
             }
         });
 
+        jLabel15.setText("Fecha de entrega:");
+
+        txtMonth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMonthActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setText("Dia");
+
+        lblMes.setText("Mes");
+
+        jLabel18.setText("Año");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -1188,27 +1209,56 @@ public class Ventas extends javax.swing.JPanel {
                         .addGap(54, 54, 54))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(btnPrintAll)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblNumberOrder)
-                        .addGap(123, 123, 123)
+                        .addGap(36, 36, 36)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTotalSold)
-                        .addGap(91, 91, 91))))
+                        .addGap(68, 68, 68)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(txtDay, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addGap(24, 24, 24)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(lblMes)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel18)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(lblMes)
+                    .addComponent(jLabel18))
+                .addGap(1, 1, 1)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPrintAll)
                     .addComponent(jLabel14)
                     .addComponent(lblTotalSold)
                     .addComponent(jLabel16)
-                    .addComponent(lblNumberOrder))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lblNumberOrder)
+                    .addComponent(jLabel15)
+                    .addComponent(txtDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1862,34 +1912,59 @@ public class Ventas extends javax.swing.JPanel {
 
     private void btnPrintCurrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintCurrentActionPerformed
         // TODO add your handling code here:
-        int order = Integer.parseInt(lblActual.getText());
-        int cupo = 18;
-        SearchValue  svc = dr.SearchCustomer(Integer.parseInt(orderTempsLoad.get(order-1).get(0).toString()));
-        List<String> list = new ArrayList<>();
-        list.add(svc.getName());
-        list.add("");
-        list.add(svc.getAddress());
-        list.add("");
-        list.add("");
+        if(!"".equals(txtDay.getText()) &&  !"".equals(txtMonth.getText()) && !"".equals(txtYear.getText())){
+            int order = Integer.parseInt(lblActual.getText());
+            int cupo = 18;
+            SearchValue  svc = dr.SearchCustomer(Integer.parseInt(orderTempsLoad.get(order-1).get(0).toString()));
+            List<String> list = new ArrayList<>();
+            List<List<String>> productos = new ArrayList<>();
         
-        DefaultTableModel model = (DefaultTableModel)jTable5.getModel();
+            list.add("                "+svc.getName());
+            list.add("                           "+svc.getAddress());
+            list.add("");
+            list.add("");
+            list.add("");
         
-        for (int i = 0; i <model.getRowCount(); i++) {
-            String productName = model.getValueAt(i,1).toString();
-            String resultado = String.format("%-50s", productName);
-            String product = model.getValueAt(i, 2).toString()+"     "+resultado+model.getValueAt(i, 3).toString()+"  "+model.getValueAt(i, 4).toString();
-            list.add(product);
-        }
-        if(model.getRowCount() < 18 ){
-            cupo = cupo - model.getRowCount();
-            for (int i = 0; i < cupo; i++) {
+            DefaultTableModel model = (DefaultTableModel)jTable5.getModel();
+        
+            for (int i = 0; i <model.getRowCount(); i++) {
+                List<String>productDetail = new ArrayList<>();
+                String productName = model.getValueAt(i,1).toString();
+                String pu = model.getValueAt(i, 3).toString();
+                String pt = model.getValueAt(i, 4).toString();
+
+                productDetail.add(model.getValueAt(i, 2).toString());
+                productDetail.add(productName);
+                productDetail.add("$"+pu);
+                productDetail.add("$"+pt);
+            
+                productos.add(productDetail);
                 list.add("");
             }
-        }
-         list.add("                       "+orderTempsLoad.get(order-1).get(2).toString());
-        ImprimirFactura printOrder = new ImprimirFactura(list);
+            if(model.getRowCount() < 18 ){
+                cupo = cupo - model.getRowCount();
+                for (int i = 0; i < cupo; i++) {
+                    List<String>productDetail = new ArrayList<>();
+                    productDetail.add("");
+                    productDetail.add("");
+                    productDetail.add("");
+                    productDetail.add("");
+                    productos.add(productDetail);
+                    list.add("");
+                }
+            }
+            String total = "$"+orderTempsLoad.get(order-1).get(2).toString();
+            System.out.println("");
+            list.add(total);
+            String nOrderString = "N°: "+orderTempsLoad.get(order-1).get(3).toString();
+            System.out.println(nOrderString);
+            ImprimirFactura printOrder = new ImprimirFactura(list,productos,nOrderString,txtDay.getText(),txtMonth.getText(),txtYear.getText(),lblActual.getText());
         
-        printOrder.imprimir();
+            printOrder.imprimir();
+        }else{
+            JOptionPane.showMessageDialog(null,"Debe de ingresar la fecha de entrega!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
         
         
     }//GEN-LAST:event_btnPrintCurrentActionPerformed
@@ -1925,6 +2000,10 @@ public class Ventas extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnRestablecerActionPerformed
 
+    private void txtMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMonthActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMonthActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCarrito;
@@ -1956,7 +2035,10 @@ public class Ventas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel23;
@@ -2008,6 +2090,7 @@ public class Ventas extends javax.swing.JPanel {
     private javax.swing.JLabel lblDireccion6;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblMax;
+    private javax.swing.JLabel lblMes;
     private javax.swing.JLabel lblNombreCliente;
     private javax.swing.JLabel lblNombreCliente2;
     private javax.swing.JLabel lblNombreCliente6;
@@ -2023,10 +2106,13 @@ public class Ventas extends javax.swing.JPanel {
     private javax.swing.JTextField txtBusquedaCliente;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCantidad2;
+    private javax.swing.JTextField txtDay;
+    private javax.swing.JTextField txtMonth;
     private javax.swing.JTextField txtNumeroPedido;
     private javax.swing.JTextField txtPrecioUni;
     private javax.swing.JTextField txtPrecioUni2;
     private javax.swing.JTextField txtProducto;
     private javax.swing.JTextField txtProducto2;
+    private javax.swing.JTextField txtYear;
     // End of variables declaration//GEN-END:variables
 }
