@@ -224,12 +224,21 @@ public class Datarequest {
         }
         return provider;
     }
-   public List<List<Object>> loadProductsSold( int id_provider, boolean  soldProduct){
+   public List<List<Object>> loadProductsSold( int id_provider, boolean  soldProduct,boolean showAll,String txtSearch){
         List<List<Object>> provider = new ArrayList<>();
         String sql;
-        if(soldProduct){
+        if(soldProduct && !showAll && "".equals(txtSearch)){
             sql = "SELECT * FROM tbProduct WHERE total_sold > 0 AND id_provider = "+ id_provider;
-        }else{
+        }else if(showAll && !soldProduct && "".equals(txtSearch)){
+            sql = "SELECT * FROM tbProduct";
+        }else if(showAll && soldProduct && "".equals(txtSearch)){
+            sql = "SELECT * FROM tbProduct WHERE total_sold > 0";
+        }else if(showAll && soldProduct && !"".equals(txtSearch)){
+             sql = "SELECT * FROM tbProduct WHERE total_sold > 0 AND product_name LIKE '%"+txtSearch+"%'";
+        }else if(!showAll && soldProduct && !"".equals(txtSearch)){
+            sql = "SELECT * FROM tbProduct WHERE total_sold > 0 AND id_provider = "+ id_provider+" AND product_name LIKE '%"+txtSearch+"%'";
+        }
+        else{
             sql = "SELECT * FROM tbProduct WHERE id_provider = "+id_provider;
         }
         
@@ -810,5 +819,22 @@ public class Datarequest {
             return false;
         }
     }
+      public int loadLastIDCustomer(){
+      int lastId = 0;
+       String sql = "SELECT MAX(id) AS last_id FROM tbClient";
+        try(Connection conn = dbConnection.connect();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)){
+                if(rs.next()){
+                    lastId = rs.getInt("last_id");
+                }
+                conn.close();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return lastId;
+  }
+    
+
     
 }

@@ -45,7 +45,7 @@ public class NewClientePane {
         return this.validado;
     }
     
-public void mostrarDialogoConPanel(JPanel parentFrame) {
+public void mostrarDialogoConPanel(JPanel parentFrame, int itemSelectecCB) {
  JLabel labelUsuario = new JLabel("Usuario:");
   txtUsername = new JTextField();
 
@@ -56,6 +56,7 @@ public void mostrarDialogoConPanel(JPanel parentFrame) {
         modelCombo.addElement("US-JPSN");
         JLabel labelRuta = new JLabel("Ruta:");
         cbRuta = new JComboBox<>(modelCombo);
+        cbRuta.setSelectedIndex(itemSelectecCB);
 
         JLabel labelDireccion = new JLabel("Dirección:");
         textArea = new JTextArea(10, 30);

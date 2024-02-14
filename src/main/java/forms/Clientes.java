@@ -303,7 +303,7 @@ public class Clientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if (!"".equals(txtNombre.getText()) && taDireccion.getText() != "") {
+        if (!"".equals(txtNombre.getText()) && !"".equals(taDireccion.getText())) {
             dr.registerClient(txtNombre.getText(), taDireccion.getText(), cbRuta.getSelectedItem().toString(), 0.00f);
             loadClientTable();
             cleanTXT();

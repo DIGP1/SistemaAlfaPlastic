@@ -579,66 +579,44 @@
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnPrintAll" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblNumberOrder" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblTotalSold" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                      <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnRestablecer" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="178" max="-2" attributes="0"/>
-                              <Component id="btnBack" min="-2" pref="50" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lblActual" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDay" min="-2" pref="40" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="lblMax" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnNext" min="-2" pref="50" max="-2" attributes="0"/>
-                              <EmptySpace pref="37" max="32767" attributes="0"/>
-                              <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnPrintCurrent" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnPrintAll" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lblNumberOrder" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lblTotalSold" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                              <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txtDay" min="-2" pref="40" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtMonth" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                      <Component id="lblMes" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtYear" min="-2" pref="40" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                      <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtMonth" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                              <Component id="lblMes" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtYear" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -664,18 +642,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnNext" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblActual" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblMax" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnPrintCurrent" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnRestablecer" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -703,6 +670,11 @@
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jPanel7" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -719,7 +691,8 @@
                               <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
                               <Component id="lblTotalVenta3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="46" max="32767" attributes="0"/>
+                          <EmptySpace pref="12" max="32767" attributes="0"/>
+                          <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -857,52 +830,112 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Container class="javax.swing.JPanel" name="jPanel7">
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnRestablecer" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+                              <Component id="btnBack" min="-2" pref="50" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblActual" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="lblMax" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnNext" min="-2" pref="50" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                              <Component id="jLabel13" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnPrintCurrent" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                      <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnNext" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblActual" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblMax" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnRestablecer" alignment="3" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="btnPrintCurrent" alignment="3" max="-2" attributes="0"/>
+                                      <Component id="jLabel13" alignment="3" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="btnPrintCurrent">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Imprimir"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrintCurrentActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel13">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Imprimir factura actual"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnBack">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblActual">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="0"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel6">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="de"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblMax">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="0"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnNext">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNextActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnRestablecer">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Reiniciar ventas"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRestablecerActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btnBack">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnNext">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNextActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblActual">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="0"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblMax">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="0"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel6">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="de"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel13">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Imprimir factura actual"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnPrintCurrent">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Imprimir"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrintCurrentActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="btnPrintAll">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Imprimir todo"/>
@@ -936,14 +969,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnRestablecer">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Reiniciar ventas"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRestablecerActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel15">
               <Properties>

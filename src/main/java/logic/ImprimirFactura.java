@@ -31,6 +31,15 @@ public class ImprimirFactura implements Printable {
         this.nOrderTemp = nOrderTemp;
         this.nOrder = nOrder;
     }
+    private  static String quitarCerosNoSignificativos(float numero) {
+        // Convierte el número a una cadena
+        String cadena = String.valueOf(numero);
+
+        // Utiliza una expresión regular para quitar los ceros no significativos después del punto
+        cadena = cadena.replaceAll("\\.?0*$", "");
+
+        return cadena;
+    }
 
     public void imprimir() {
         PrinterJob job = PrinterJob.getPrinterJob();
@@ -62,7 +71,7 @@ public class ImprimirFactura implements Printable {
         int interlineado = 5;
 
         // Definir la posición inicial en el eje Y (3.6 cm convertido a puntos)
-        double yPos = 90.37007874015748; // 3.6 cm en puntos
+        double yPos = 79.37007874015748; // 3.6 cm en puntos
 
         // Calcular cuántas líneas caben en la página
         int linesPerPage = (int) ((pageFormat.getImageableHeight() - interlineado - yPos) / (lineHeight + interlineado));
@@ -73,45 +82,42 @@ public class ImprimirFactura implements Printable {
 
         for (int i = startIndex; i < endIndex; i++) {
             String lineaActual = lineas.get(i);
-            if(i>4 && i<22){
-                int j = i-4;
+            System.out.println(yPos);
+            if(i>=5 && i<23){
+                int j = i-5;
+                
                 String can = Product.get(j).get(0);
                 String pn = Product.get(j).get(1);
                 String pu = Product.get(j).get(2);
                 String pt = Product.get(j).get(3);
-                
-                g2d.drawString(can, 116, (int) yPos);
-                g2d.drawString(pn, 144, (int) yPos);
-                g2d.drawString(pu, 350, (int) yPos);
-                g2d.drawString(pt, 414, (int) yPos);
+                g2d.drawString(can, 120, (int) yPos);
+                g2d.drawString(pn, 147, (int) yPos);
+                g2d.drawString(pu, 352, (int) yPos);
+                g2d.drawString(pt, 416, (int) yPos);
                 
             }else{
                 switch (i) {
+                    case 0 ->{
+                         g2d.drawString(nOrderTemp, 100, 64);
+                         g2d.drawString(nOrder, 414, 64);
+                         g2d.drawString(lineaActual, 110, (int) yPos);
+                    }
                     case 1 -> {
                         g2d.setFont(new Font("Arial", Font.PLAIN, 7));
-                        g2d.drawString(lineaActual, 100, (int) yPos);
-                        System.out.println(yPos);
+                        g2d.drawString(lineaActual, 110, (int) yPos);
+
                     }
                     case 2 -> {
-                        g2d.setFont(new Font("Arial", Font.PLAIN, 10));
-                            g2d.drawString(days, 363, 113);
-                            g2d.drawString(month, 401, 113);
-                            g2d.drawString(year, 438, 113);
+                            g2d.setFont(new Font("Arial", Font.PLAIN, 10));
+                            g2d.drawString(days, 366, 105);
+                            g2d.drawString(month, 404, 105);
+                            g2d.drawString(year, 442, 105);
                     }
-                    default -> {
-                        if(i == 23){
+                    case 23->{
                             g2d.setFont(new Font("Arial", Font.BOLD, 13));
                             g2d.drawString(lineaActual, 410, (int) yPos);
-                        }else{
-                            if(i == 0){
-                                System.out.println(nOrder);
-                                g2d.drawString(nOrderTemp, 100, 73);
-                                g2d.drawString(nOrder, 414, 73);
-                                g2d.drawString(lineaActual, 100, (int) yPos);
-                            }
-                            g2d.setFont(new Font("Arial", Font.PLAIN, 10));
-                            g2d.drawString(lineaActual, 100, (int) yPos);
-                        }
+                    }
+                    default -> {
                     }
                 }
             }
