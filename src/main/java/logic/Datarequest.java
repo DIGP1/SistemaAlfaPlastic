@@ -42,6 +42,33 @@ public class Datarequest {
         }
         return client;
     }
+    public List<List<Object>> SearchClient(String Dato, String filter){
+         List<List<Object>> client = new ArrayList<>();
+         String sql = "";
+        if(!"".equals(filter)){
+             sql = "SELECT * FROM tbClient WHERE "+filter+" LIKE '" + Dato + "%'";
+        }else{
+            sql = "SELECT * FROM tbClient WHERE fullname LIKE '" + Dato + "%'";
+        }
+       
+        try(Connection conn = dbConnection.connect();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)){
+                    while(rs.next()){
+                        List<Object> row = new ArrayList<>();
+                        row.add(rs.getInt("id"));
+                        row.add(rs.getString("fullname"));
+                        row.add(rs.getString("address"));
+                        row.add(rs.getString("rute"));
+                        row.add(rs.getFloat("total_sold"));
+                        client.add(row);  
+                    }
+                    conn.close();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return client;
+    }
     
     public boolean registerClient(String fullname, String address, String rute, float total_sold){
         String sql = "INSERT INTO tbClient (fullname, address, rute, total_sold) VALUES (?,?,?,?)";
@@ -202,6 +229,22 @@ public class Datarequest {
             return false;
         }
  }
+ public int returnIdProdiver(String nameProvider){
+         String sql = "SELECT * FROM tbProvider WHERE name LIKE '%"+nameProvider+"%'";
+         int id = 0;
+        try(Connection conn = dbConnection.connect();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)){
+                    if(rs.next()){
+                        id = rs.getInt("id");
+                    }
+                    conn.close();
+                    
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return id;
+ }
   public List<List<Object>> loadProducts(){
         List<List<Object>> provider = new ArrayList<>();
         
@@ -224,6 +267,32 @@ public class Datarequest {
         }
         return provider;
     }
+  public List<List<Object>> SearchProductTable(String dato, String column,int idProvider){
+         List<List<Object>> provider = new ArrayList<>();
+         String sql = "";
+         switch (column) {
+            case "Proveedor" -> sql = "SELECT * FROM tbProduct WHERE id_provider = "+idProvider;
+            default -> sql = "SELECT * FROM tbProduct WHERE product_name LIKE '%"+dato+"%'";
+         }
+         
+        try(Connection conn = dbConnection.connect();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)){
+                    while(rs.next()){
+                        List<Object> row = new ArrayList<>();
+                        row.add(rs.getInt("id"));
+                        row.add(rs.getString("product_name"));
+                        row.add(rs.getFloat("total_sold"));
+                        row.add(rs.getInt("id_provider"));
+                        row.add(rs.getFloat("purchase_price"));
+                        provider.add(row);  
+                    }
+                    conn.close();
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return provider;
+  }
    public List<List<Object>> loadProductsSold( int id_provider, boolean  soldProduct,boolean showAll,String txtSearch){
         List<List<Object>> provider = new ArrayList<>();
         String sql;

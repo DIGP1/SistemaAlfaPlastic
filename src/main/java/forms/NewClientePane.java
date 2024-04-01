@@ -38,6 +38,7 @@ public class NewClientePane {
         private JComboBox<String> cbRuta;
         private JTextArea textArea;
         private JPanel panelPrincipal;
+        public boolean verificacion = false;
         public void setValidacion(boolean a){
         this.validado = a;
     }
@@ -117,6 +118,7 @@ public void mostrarDialogoConPanel(JPanel parentFrame, int itemSelectecCB) {
                         if (window instanceof JDialog) {
                         JDialog dialog = (JDialog) window;
                         dialog.dispose();  // Cierra el diálogo
+                        verificacion = true;
                         }
                    }else{
                        JOptionPane.showMessageDialog(null, "Error al ingresar al cliente, intentelo nuevamente", "Error",JOptionPane.ERROR_MESSAGE);
@@ -133,6 +135,7 @@ public void mostrarDialogoConPanel(JPanel parentFrame, int itemSelectecCB) {
                 if (window instanceof JDialog) {
                 JDialog dialog = (JDialog) window;
                 dialog.dispose();  // Cierra el diálogo
+                verificacion = false;
         }
             }
         });

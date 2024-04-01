@@ -11,12 +11,16 @@ package forms;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import logic.Datarequest;
+import logic.SearchProduct;
 public class Clientes extends javax.swing.JPanel {
 
     /**
@@ -27,7 +31,7 @@ public class Clientes extends javax.swing.JPanel {
     private Datarequest dr = new Datarequest();
     public Clientes() {
         initComponents();
-        loadClientTable();
+        loadClientTable("","");
         btnEliminar.setEnabled(false);
         btnEditar.setEnabled(false);
         
@@ -59,18 +63,59 @@ public class Clientes extends javax.swing.JPanel {
                 }
             }
         });
+  txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        buscarNombreCuenta();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        buscarNombreCuenta();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        buscarNombreCuenta();
+    }
+
+    private void buscarNombreCuenta() {
+        buscarEnBase(txtBusqueda.getText());
+    }
+    private void buscarEnBase(String Dato){
+        
+        if("".equals(Dato)){
+            loadClientTable("", "");
+        }else{
+            String DatoString = Dato.trim();
+            loadClientTable(DatoString, cbFiltro.getSelectedItem().toString());
+        }
+    }
+    });
     }
     
     
     
-    private void loadClientTable(){
-        List<List<Object>> client = dr.loadClient();
-        System.out.println(client);
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0);
-        for (List<Object> list : client) {
-            modelo.addRow(new Object[]{list.get(0),list.get(1),list.get(2),list.get(3),list.get(4)});
+    private void loadClientTable(String Dato, String filtrado){
+        String nameColumn = "";
+        switch (filtrado) {
+            case "Nombre" -> nameColumn = "fullname";
+            case "Direccion" -> nameColumn = "address";
+             case "Ruta" -> nameColumn = "rute";
+            default -> nameColumn = "fullname";
         }
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        List<List<Object>> client = null;
+        if("".equals(Dato)){
+              client = dr.loadClient();
+        }else{
+            client = dr.SearchClient(Dato, nameColumn);
+        }
+            modelo.setRowCount(0);
+            for (List<Object> list : client) {
+                modelo.addRow(new Object[]{list.get(0),list.get(1),list.get(2),list.get(3),list.get(4)});
+            }
+
         jTable1.setModel(modelo);
     }
     private void cleanTXT(){
@@ -305,7 +350,7 @@ public class Clientes extends javax.swing.JPanel {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if (!"".equals(txtNombre.getText()) && !"".equals(taDireccion.getText())) {
             dr.registerClient(txtNombre.getText(), taDireccion.getText(), cbRuta.getSelectedItem().toString(), 0.00f);
-            loadClientTable();
+            loadClientTable("","");
             cleanTXT();
         }else{
             JOptionPane.showMessageDialog(null,"Debe de llenar todos los campos!!", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -319,7 +364,7 @@ public class Clientes extends javax.swing.JPanel {
               if (dr.EditClient(txtNombre.getText(), taDireccion.getText(), cbRuta.getSelectedItem().toString(), 0.00f, idSelected)) {
                   JOptionPane.showMessageDialog(null,"Datos actualizados con exito!", "Exito", JOptionPane.INFORMATION_MESSAGE);
                   btnEditar.setEnabled(false);
-                  loadClientTable();
+                  loadClientTable("","");
                   cleanTXT();
                   
               }else{
@@ -337,7 +382,7 @@ public class Clientes extends javax.swing.JPanel {
             if (dr.DeleteClient(idSelectedEliminate)) {
                 JOptionPane.showMessageDialog(null,"Cliente eliminado con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
                 cleanTXT();
-                loadClientTable();
+                loadClientTable("","");
                 btnEliminar.setEnabled(false);
             }else{
                 JOptionPane.showMessageDialog(null,"Error al eliminar al cliente", "ERROR", JOptionPane.ERROR_MESSAGE);

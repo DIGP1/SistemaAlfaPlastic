@@ -71,7 +71,7 @@ public class ImprimirFactura implements Printable {
         int interlineado = 5;
 
         // Definir la posición inicial en el eje Y (3.6 cm convertido a puntos)
-        double yPos = 79.37007874015748; // 3.6 cm en puntos
+        double yPos = 82.37007874015748; // 3.6 cm en puntos
 
         // Calcular cuántas líneas caben en la página
         int linesPerPage = (int) ((pageFormat.getImageableHeight() - interlineado - yPos) / (lineHeight + interlineado));
@@ -90,16 +90,16 @@ public class ImprimirFactura implements Printable {
                 String pn = Product.get(j).get(1);
                 String pu = Product.get(j).get(2);
                 String pt = Product.get(j).get(3);
-                g2d.drawString(can, 120, (int) yPos);
-                g2d.drawString(pn, 147, (int) yPos);
-                g2d.drawString(pu, 352, (int) yPos);
-                g2d.drawString(pt, 416, (int) yPos);
+                g2d.drawString(can, 123, (int) yPos);
+                g2d.drawString(pn, 150, (int) yPos);
+                g2d.drawString(pu, 355, (int) yPos);
+                g2d.drawString(pt, 419, (int) yPos);
                 
             }else{
                 switch (i) {
                     case 0 ->{
-                         g2d.drawString(nOrderTemp, 100, 64);
-                         g2d.drawString(nOrder, 414, 64);
+                         g2d.drawString(nOrderTemp, 100, 70);
+                         g2d.drawString(nOrder, 414, 70);
                          g2d.drawString(lineaActual, 110, (int) yPos);
                     }
                     case 1 -> {
@@ -109,9 +109,9 @@ public class ImprimirFactura implements Printable {
                     }
                     case 2 -> {
                             g2d.setFont(new Font("Arial", Font.PLAIN, 10));
-                            g2d.drawString(days, 366, 105);
-                            g2d.drawString(month, 404, 105);
-                            g2d.drawString(year, 442, 105);
+                            g2d.drawString(days, 370, 110);
+                            g2d.drawString(month, 408, 110);
+                            g2d.drawString(year, 446, 110);
                     }
                     case 23->{
                             g2d.setFont(new Font("Arial", Font.BOLD, 13));

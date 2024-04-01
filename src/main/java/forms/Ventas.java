@@ -6,6 +6,8 @@ package forms;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -25,8 +27,10 @@ import logic.SearchProduct;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Vector;
 import logic.ImprimirFactura;
+import logic.ImprimirTodo;
 
 /**
  *
@@ -630,6 +634,12 @@ public class Ventas extends javax.swing.JPanel {
         }
         jTable5.setModel(modelo);
     }
+        public double redondeo(double valor){
+            DecimalFormatSymbols df = new DecimalFormatSymbols(Locale.US);
+            DecimalFormat formato = new DecimalFormat("#.##", df);
+            valor = Double.parseDouble(formato.format(valor));
+            return valor;
+    }
     
            private  static String quitarCerosNoSignificativos(float numero) {
         // Convierte el número a una cadena
@@ -1016,6 +1026,11 @@ public class Ventas extends javax.swing.JPanel {
         jPanel2.add(btnGuardarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(447, 481, -1, -1));
 
         btnCancelarVenta.setText("Cancelar venta");
+        btnCancelarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarVentaActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancelarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(611, 481, -1, -1));
 
         jLabel20.setText("Ruta:");
@@ -1908,9 +1923,11 @@ public class Ventas extends javax.swing.JPanel {
       dr.DeleteDetailSale(id_sale);
       dr.DeleteSaleTemp(id_sale);
       dr.DeleteSale(id_sale);
+      loadOrders();
        clientTextClean();
         productCleanText();
         model.setRowCount(0);
+        
         jTable4.setModel(model);
         lblTotalVenta2.setText("0.00");
         jPanel10.setVisible(false);
@@ -1991,7 +2008,7 @@ public class Ventas extends javax.swing.JPanel {
                     list.add("");
                 }
             }
-            String total = "$"+orderTempsLoad.get(order-1).get(2).toString();
+            String total = "$"+redondeo(Double.parseDouble(orderTempsLoad.get(order-1).get(2).toString()));
             System.out.println("");
             list.add(total);
             String nOrderString = "N°: "+orderTempsLoad.get(order-1).get(3).toString();
@@ -2012,15 +2029,18 @@ public class Ventas extends javax.swing.JPanel {
         NewClientePane ncp = new NewClientePane();
         
         ncp.mostrarDialogoConPanel(this, jComboBox1.getSelectedIndex());
-        int idClient = dr.loadLastIDCustomer();
-        sv = dr.SearchCustomer(idClient);
+        if(ncp.verificacion){
+            int idClient = dr.loadLastIDCustomer();
+            sv = dr.SearchCustomer(idClient);
         
-        if(sv !=null){
+            if(sv !=null){
                  lblNombreCliente.setText(sv.getName());
                 lblDireccion.setText(sv.getAddress());
                 idCustomerSelected = sv.getId(); 
                 total_sold = sv.getTotalSold();
+            }
         }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -2039,9 +2059,7 @@ public class Ventas extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null,"Venta restablecidas con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
                         dr.restoreSoldProduct();
                          loadOrders();
-                        if (!orderTempsLoad.isEmpty()) {
-                            loadOrder(0);
-                        }
+                         loadOrder(0);
                     }else{
                         JOptionPane.showMessageDialog(null,"Error al restablecer las ventas!", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
@@ -2058,8 +2076,74 @@ public class Ventas extends javax.swing.JPanel {
 
     private void btnPrintAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintAllActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Aun en desarrollo!!", "Proximamente", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null,"Aun en desarrollo!!", "Proximamente", JOptionPane.INFORMATION_MESSAGE);
+        if (!"".equals(txtDay.getText()) &&  !"".equals(txtMonth.getText()) && !"".equals(txtYear.getText())) {
+            int nOrder = 1;
+            List<List<String>> fracturas = new ArrayList<>();
+            List<List<List<String>>>Product = new ArrayList<>();
+            List<String>NOrders = new ArrayList<>();
+            for (List<Object> obj : orderTempsLoad ) {
+                int cupo = 18;
+                List<String> list = new ArrayList<>();
+                SearchValue client = dr.SearchCustomer(Integer.parseInt(obj.get(0).toString()));
+                list.add("                 "+client.getName());
+                list.add("                            "+client.getAddress());
+                list.add("");
+                list.add("");
+                list.add("");
+                List<List<Object>> product = dr.loadDetailSale(Integer.parseInt(obj.get(3).toString()));
+                List<List<String>> productFactura = new ArrayList<>();
+                for(int i = 0; i< product.size(); i++){
+                    List<String>productDetail = new ArrayList<>();
+                    String productName = dr.SearchNameProduct(Integer.parseInt(product.get(i).get(0).toString()));
+                    String pu = product.get(i).get(2).toString();
+                    String pt = product.get(i).get(3).toString();
+                    
+                    productDetail.add(quitarCerosNoSignificativos(Float.parseFloat(product.get(i).get(1).toString())));
+                    productDetail.add(productName);
+                    productDetail.add("$"+pu);
+                    productDetail.add("$"+pt);
+                    
+                    productFactura.add(productDetail);
+                    list.add("");
+                }
+                if(product.size() < 18 ){
+                    cupo = cupo - product.size();
+                    for (int i = 0; i < cupo; i++) {
+                        List<String>productDetail = new ArrayList<>();
+                        productDetail.add("");
+                        productDetail.add("");
+                        productDetail.add("");
+                        productDetail.add("");
+                        productFactura.add(productDetail);
+                        list.add("");
+                }         
+            }
+                 Product.add(productFactura);
+                String total = "$"+redondeo(Double.parseDouble(obj.get(2).toString()));
+                System.out.println("");
+                list.add(total);
+                NOrders.add("N°: "+obj.get(3).toString());
+                fracturas.add(list);          
+        }
+            ImprimirTodo it = new ImprimirTodo(fracturas,Product,NOrders,txtDay.getText(),txtMonth.getText(),txtYear.getText());
+            it.imprimir();
+
+        }else{
+            JOptionPane.showMessageDialog(null,"Debe de ingresar la fecha de entrega!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }        
     }//GEN-LAST:event_btnPrintAllActionPerformed
+
+    private void btnCancelarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarVentaActionPerformed
+        // TODO add your handling code here:
+        clientTextClean();
+        productCleanText();
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+         model.setRowCount(0);
+         jTable2.setModel(model);
+          lblTotalVenta.setText("0.00");
+        
+    }//GEN-LAST:event_btnCancelarVentaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -63,10 +63,7 @@ public class Consolidado extends javax.swing.JPanel {
     public Consolidado() {
         initComponents();
         
-        productTable1.setVisible(false);
-        jScrollPane3.setVisible(false);
         loadComboBoxProvider(cbRuta);
-        loadComboBoxProvider(cbFiltro);
         loadComboBoxProvider(cbFiltro1);
         loadProviderTable();
         loadProductTable(dr.loadProducts(),productTable);
@@ -215,31 +212,7 @@ public class Consolidado extends javax.swing.JPanel {
                 }
             }
         });
-            
-             cbFiltro.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Aquí se ejecutará el código cuando cambie el valor del combo box
-                    ShowTable2();
-                    String[] provider = cbFiltro.getSelectedItem().toString().split("-");
-                    if(provider.length == 0){
-                        loadProductTable(dr.loadProductsSold(0,jCheckBox1.isSelected(),true,""),productTable1);
-                    }else{
-                        loadProductTable(dr.loadProductsSold(Integer.parseInt(provider[0]),jCheckBox1.isSelected(),false,""),productTable1);
-                    }
-                    
-                }
-            });
-             jCheckBox1.addItemListener(e -> {
-                    ShowTable2();
-                    String[] provider = cbFiltro.getSelectedItem().toString().split("-");
-                    if(provider.length == 0){
-                        loadProductTable(dr.loadProductsSold(0,jCheckBox1.isSelected(),true,""),productTable1);
-                    }else{
-                        loadProductTable(dr.loadProductsSold(Integer.parseInt(provider[0]),jCheckBox1.isSelected(),false,""),productTable1);
-                    }
-            });
-             
+                      
           txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -262,6 +235,34 @@ public class Consolidado extends javax.swing.JPanel {
                 filterTable();
             }
         });
+         
+           txtBusquedaProduct.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if("".equals(txtBusquedaProduct.getText())){
+                    loadProductTable(dr.loadProducts(),productTable);
+                }else{
+                loadProductTable(dr.SearchProductTable(txtBusquedaProduct.getText(),jComboBox1.getSelectedItem().toString(),dr.returnIdProdiver(txtBusquedaProduct.getText())), productTable);
+                }
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                                if("".equals(txtBusquedaProduct.getText())){
+                    loadProductTable(dr.loadProducts(),productTable);
+                }else{
+                loadProductTable(dr.SearchProductTable(txtBusquedaProduct.getText(),jComboBox1.getSelectedItem().toString(),dr.returnIdProdiver(txtBusquedaProduct.getText())), productTable);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                                if("".equals(txtBusquedaProduct.getText())){
+                    loadProductTable(dr.loadProducts(),productTable);
+                }else{
+                loadProductTable(dr.SearchProductTable(txtBusquedaProduct.getText(),jComboBox1.getSelectedItem().toString(),dr.returnIdProdiver(txtBusquedaProduct.getText())), productTable);
+                }
+            }
+        });
             
     }
     private void filterTable() {
@@ -273,6 +274,7 @@ public class Consolidado extends javax.swing.JPanel {
             loadProductTable(dr.loadProductsSold(Integer.parseInt(provider[0]),true,false,busqueda),productTable3);
          }
     }
+    
     //Carga la informacion en la tabla de proveedores o jTable2
         private void loadProviderTable(){
         List<List<Object>> provider = dr.loadProviders();
@@ -296,34 +298,24 @@ public class Consolidado extends javax.swing.JPanel {
        private void loadProductTable(List<List<Object>> provider, JTable table){
         DefaultTableModel modelo = (DefaultTableModel) table.getModel();
         modelo.setRowCount(0);
-        switch (modelo.getColumnCount()) {
-            case 3 -> {
-                table.setShowGrid(true);
-                table.setRowHeight(25);
-                //table.setShowHorizontalLines(false);
-                table.setShowVerticalLines(false);
-                table.getColumnModel().getColumn(2).setCellRenderer(new FormatoEspecialRenderer());
-                for (List<Object> list : provider) {
-                    modelo.addRow(new Object[]{list.get(0),list.get(1),quitarCerosNoSignificativos((float) list.get(2))});
-                }
+        table.setShowGrid(true);
+        table.setRowHeight(25);
+        //table.setShowHorizontalLines(false);
+        if(table.getColumnCount() == 4){
+            //System.out.println("Cargo tabla en el if");
+           table.getColumnModel().getColumn(2).setCellRenderer(new FormatoEspecialRenderer());
+            for (List<Object> list : provider) {
+                     modelo.addRow(new Object[]{list.get(0),list.get(1),quitarCerosNoSignificativos((float) list.get(2))});
             }
-            case 4 -> {
-                table.setShowGrid(true);
-                table.setRowHeight(25);
-                //table.setShowHorizontalLines(false);
-                table.setShowVerticalLines(false);
-                table.getColumnModel().getColumn(2).setCellRenderer(new FormatoEspecialRenderer());
-                for (List<Object> list : provider) {
-                    modelo.addRow(new Object[]{list.get(0),list.get(1),quitarCerosNoSignificativos((float) list.get(2)),list.get(3)});
-                }
-                modelTable4  = new DefaultTableModel();
-            }
-            default -> {
-                for (List<Object> list : provider) {
-                    modelo.addRow(new Object[]{list.get(0),list.get(1),list.get(3)+"-"+dr.loadNameProvider(Integer.parseInt(list.get(3).toString())),list.get(2),list.get(4)});
-                }
-            }
+             
+        }else{
+           // System.out.println("Cargo tabla en el else");
+                    for (List<Object> list : provider) {
+                     modelo.addRow(new Object[]{list.get(0),list.get(1),list.get(3).toString() + "-"+dr.loadNameProvider(Integer.parseInt(list.get(3).toString())),quitarCerosNoSignificativos((float) list.get(2)),list.get(4)});
+         }
         }
+
+         modelTable4  = new DefaultTableModel();
 
         table.setModel(modelo);
        }
@@ -340,18 +332,6 @@ public class Consolidado extends javax.swing.JPanel {
            txtNombre.setText("");
            txtPrecioCompra.setText("");
        }
-       private void ShowTable2(){
-          jScrollPane1.setVisible(false);
-          productTable.setVisible(false);
-          productTable1.setVisible(true);
-          jScrollPane3.setVisible(true);
-       }
-       private void ShowTable1(){
-          productTable.setVisible(true);
-         jScrollPane1.setVisible(true);
-         productTable1.setVisible(false);
-         jScrollPane3.setVisible(false);
-       }
         
     
    
@@ -367,7 +347,6 @@ public class Consolidado extends javax.swing.JPanel {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        cbFiltro = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         productTable = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
@@ -382,10 +361,8 @@ public class Consolidado extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         txtPrecioCompra = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        productTable1 = new javax.swing.JTable();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        txtBusquedaProduct = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -535,44 +512,9 @@ public class Consolidado extends javax.swing.JPanel {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jLabel1.setText("Filtrar proveedor");
+        jLabel1.setText("Buscar por:");
 
-        jCheckBox1.setText("Solo productos vendidos");
-
-        jButton1.setText("Mostrar todos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        productTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        productTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Nombre del producto", "Total vendidos"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(productTable1);
-        if (productTable1.getColumnModel().getColumnCount() > 0) {
-            productTable1.getColumnModel().getColumn(0).setMinWidth(1);
-            productTable1.getColumnModel().getColumn(0).setPreferredWidth(1);
-            productTable1.getColumnModel().getColumn(0).setMaxWidth(5);
-            productTable1.getColumnModel().getColumn(1).setResizable(false);
-            productTable1.getColumnModel().getColumn(1).setPreferredWidth(170);
-            productTable1.getColumnModel().getColumn(2).setResizable(false);
-            productTable1.getColumnModel().getColumn(2).setPreferredWidth(25);
-        }
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Proveedor" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -584,33 +526,23 @@ public class Consolidado extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(6, 6, 6)
-                        .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jCheckBox1)
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtBusquedaProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel1))
-                    .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jCheckBox1))
-                    .addComponent(jButton1))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBusquedaProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane1.addTab("Productos", jPanel2);
@@ -997,12 +929,6 @@ public class Consolidado extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        ShowTable1();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void btnCancelar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar2ActionPerformed
         // TODO add your handling code here:
         lblProduct.setText("Aun no seleccionado!");
@@ -1039,12 +965,10 @@ public class Consolidado extends javax.swing.JPanel {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresoProve;
-    private javax.swing.JComboBox<String> cbFiltro;
     private javax.swing.JComboBox<String> cbFiltro1;
     private javax.swing.JComboBox<String> cbFiltroProve;
     private javax.swing.JComboBox<String> cbRuta;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1067,15 +991,14 @@ public class Consolidado extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JTable productTable;
-    private javax.swing.JTable productTable1;
     private javax.swing.JTable productTable3;
     private javax.swing.JTextField txtBusqueda;
+    private javax.swing.JTextField txtBusquedaProduct;
     private javax.swing.JTextField txtBusquedaProve;
     private javax.swing.JTextField txtInventario;
     private javax.swing.JTextField txtNameProveedor;
