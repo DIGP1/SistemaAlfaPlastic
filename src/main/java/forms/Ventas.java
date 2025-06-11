@@ -2011,7 +2011,7 @@ public class Ventas extends javax.swing.JPanel {
             String total = "$"+redondeo(Double.parseDouble(orderTempsLoad.get(order-1).get(2).toString()));
             System.out.println("");
             list.add(total);
-            String nOrderString = "N°: "+orderTempsLoad.get(order-1).get(3).toString();
+            String nOrderString = orderTempsLoad.get(order-1).get(3).toString();
             System.out.println(nOrderString);
             ImprimirFactura printOrder = new ImprimirFactura(list,productos,nOrderString,txtDay.getText(),txtMonth.getText(),txtYear.getText(),lblActual.getText());
         
@@ -2123,7 +2123,7 @@ public class Ventas extends javax.swing.JPanel {
                 String total = "$"+redondeo(Double.parseDouble(obj.get(2).toString()));
                 System.out.println("");
                 list.add(total);
-                NOrders.add("N°: "+obj.get(3).toString());
+                NOrders.add(obj.get(3).toString());
                 fracturas.add(list);          
         }
             ImprimirTodo it = new ImprimirTodo(fracturas,Product,NOrders,txtDay.getText(),txtMonth.getText(),txtYear.getText());
