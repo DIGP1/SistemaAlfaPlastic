@@ -417,7 +417,7 @@ public class Datarequest {
  }
  public List<SearchValue> SearchCustomer(String codigoIngresado, String ruta) {
      List<SearchValue> listaResultados = new ArrayList<>();
-    String sql = "SELECT * FROM tbClient WHERE fullname LIKE '" + codigoIngresado + "%' AND rute LIKE '" + ruta + "%'";
+    String sql = "SELECT * FROM tbClient WHERE fullname LIKE '%" + codigoIngresado + "%' AND rute LIKE '" + ruta + "%'";
   
     try (Connection conn = dbConnection.connect();
          Statement stmt = conn.createStatement();

@@ -1,154 +1,119 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logic;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.print.*;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.util.List;
+import javax.imageio.ImageIO;
 
-/**
- *
- * @author Diego
- */
 public class ImprimirFactura implements Printable {
-  private List<String> lineas;
-  
-  private List<List<String>> Product;
-  
-  private String nOrder;
-  
-  private String days;
-  
-  private String month;
-  
-  private String year;
-  
-  private String nOrderTemp;
-  
-  public ImprimirFactura(List<String> lineas, List<List<String>> Product, String nOrder, String days, String month, String year, String nOrderTemp) {
-    this.lineas = lineas;
-    this.Product = Product;
-    this.days = days;
-    this.month = month;
-    this.year = year;
-    this.nOrderTemp = nOrderTemp;
-    this.nOrder = nOrder;
-  }
-  
-  private static String quitarCerosNoSignificativos(float numero) {
-    String cadena = String.valueOf(numero);
-    cadena = cadena.replaceAll("\\.?0*$", "");
-    return cadena;
-  }
-  
-  public void imprimir() {
-    PrinterJob job = PrinterJob.getPrinterJob();
-    job.setPrintable(this);
-    if (job.printDialog())
-      try {
-        job.print();
-      } catch (PrinterException e) {
-        e.printStackTrace();
-      }  
-  }
-  
-  public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-    if (pageIndex > 0)
-      return 1; 
-    Graphics2D g2d = (Graphics2D)graphics;
-    g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-    g2d.setFont(new Font("Arial", 0, 10));
-    int lineHeight = g2d.getFontMetrics().getHeight();
-    int interlineado = 5;
-    double yPos = 84.37007874015748D;
-    int linesPerPage = (int)((pageFormat.getImageableHeight() - interlineado - yPos) / (lineHeight + interlineado));
-    int startIndex = linesPerPage * pageIndex;
-    int endIndex = Math.min(startIndex + linesPerPage, this.lineas.size());
-    yPos = 174.37007874015748D;
-    for (int i = startIndex; i < endIndex; i++) {
-      String lineaActual = this.lineas.get(i);
-      if (i >= 5 && i < 23) {
-        int j = i - 5;
-        System.out.println(yPos);
-        String can = ((List<String>)this.Product.get(j)).get(0);
-        String pn = ((List<String>)this.Product.get(j)).get(1);
-        String pu = ((List<String>)this.Product.get(j)).get(2);
-        String pt = ((List<String>)this.Product.get(j)).get(3);
-        g2d.drawString(can, 130, (int)yPos);
-        g2d.drawString(pn, 153, (int)yPos);
-        g2d.drawString(pu, 363, (int)yPos);
-        g2d.drawString(pt, 424, (int)yPos);
-        yPos += 18.98D;
-      } else {
-        switch (i) {
-          case 0:
-            g2d.drawString(this.nOrderTemp, 110, 56);
-            g2d.setFont(new Font("Arial", 1, 13));
-            g2d.drawString(this.nOrder, 427, 56);
-            g2d.setFont(new Font("Arial", 0, 10));
-            g2d.drawString(lineaActual, 120, 77);
-            break;
-          case 1:
-            g2d.setFont(new Font("Arial", 0, 7));
-            g2d.drawString(lineaActual, 124, 97);
-            break;
-          case 2:
-            g2d.setFont(new Font("Arial", 0, 10));
-            g2d.drawString(this.days, 395, 100);
-            g2d.drawString(this.month, 425, 100);
-            g2d.drawString(this.year, 453, 100);
-            break;
-          case 23:
-            g2d.setFont(new Font("Arial", 1, 13));
-            g2d.drawString(lineaActual, 395, 525);
-            break;
-        } 
-      } 
-    } 
-    return 0;
-  }
-  
-  private PageFormat getPageFormat() {
-    PageFormat pageFormat = PrinterJob.getPrinterJob().defaultPage();
-    PageFormat customPageFormat = new PageFormat();
-    customPageFormat.setPaper(new CustomPaper(138.0D, 210.0D));
-    return customPageFormat;
-  }
-  
-  private static class CustomPaper extends Paper {
-    private double width;
-    
-    private double height;
-    
-    public CustomPaper(double width, double height) {
-      this.width = width;
-      this.height = height;
+    private List<String> lineas;
+    private List<List<String>> Product;
+    private String nOrder;
+    private String days;
+    private String month;
+    private String year;
+    private String nOrderTemp;
+    private BufferedImage facturaTemplate;
+
+    public ImprimirFactura(List<String> lineas, List<List<String>> Product, String nOrder, String days, String month, String year, String nOrderTemp) {
+        this.lineas = lineas;
+        this.Product = Product;
+        this.days = days;
+        this.month = month;
+        this.year = year;
+        this.nOrderTemp = nOrderTemp;
+        this.nOrder = nOrder;
+
+        // Cargar imagen del diseño de factura desde resources
+        try {
+            InputStream is = getClass().getResourceAsStream("/factura_template_i2.png");
+            if (is == null) throw new RuntimeException("No se encontró la imagen de la factura en resources");
+            facturaTemplate = ImageIO.read(is);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            facturaTemplate = null;
+        }
     }
-    
-    public double getWidth() {
-      return this.width;
+
+    public void imprimir() {
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(this);
+        if (job.printDialog()) {
+            try {
+                job.print();
+            } catch (PrinterException e) {
+                e.printStackTrace();
+            }
+        }
     }
-    
-    public double getHeight() {
-      return this.height;
+
+    @Override
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+        if (pageIndex > 0)
+            return NO_SUCH_PAGE;
+
+        Graphics2D g2d = (Graphics2D)graphics;
+        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+        double ancho = pageFormat.getImageableWidth();
+        double alto_total = pageFormat.getImageableHeight();
+        double alto = alto_total / 2; // Usamos solo media página
+
+        // Dibuja la imagen (sin rotar, en la mitad superior)
+        if (facturaTemplate != null) {
+            g2d.drawImage(facturaTemplate, 0, 0, (int)ancho, (int)alto, null);
+        }
+
+        // Guarda el estado original antes de rotar
+        AffineTransform old = g2d.getTransform();
+
+        // Rota y traslada SOLO el área de la factura
+        g2d.rotate(Math.toRadians(-90));
+        g2d.translate(-alto, 0);
+
+        // Ahora imprime todo el texto alineado con la factura horizontal:
+        // Cliente
+        g2d.setFont(new Font("Arial", Font.PLAIN, 10));
+        g2d.drawString(lineas.get(0), 26, 75);
+        // Dirección
+        g2d.setFont(new Font("Arial", Font.PLAIN, 7));
+        g2d.drawString(lineas.get(1), 24, 97);
+        // Fecha
+        g2d.setFont(new Font("Arial", Font.PLAIN, 10));
+        g2d.drawString(this.days, 289, 100);
+        g2d.drawString(this.month, 317, 100);
+        g2d.drawString(this.year, 344, 100);
+        // Número de orden temporal y orden real
+        g2d.drawString(this.nOrderTemp, 25, 51);
+        g2d.setFont(new Font("Arial", Font.BOLD, 13));
+        g2d.drawString(this.nOrder, 317, 51);
+
+        // Tabla de productos
+        g2d.setFont(new Font("Arial", Font.PLAIN, 10));
+        double yProductos = 174;
+        for (int p = 0; p < Product.size(); p++) {
+            List<String> prod = Product.get(p);
+            String cantidad = prod.get(0);
+            String descripcion = prod.get(1);
+            String precioU = prod.get(2);
+            String precioT = prod.get(3);
+            g2d.drawString(cantidad, 35, (int)yProductos);
+            g2d.drawString(descripcion, 58, (int)yProductos);
+            g2d.drawString(precioU, 259, (int)yProductos);
+            g2d.drawString(precioT, 312, (int)yProductos);
+            yProductos += 19.7;
+        }
+
+        // Total (la última línea de lineas)
+        g2d.setFont(new Font("Arial", Font.BOLD, 13));
+        g2d.drawString(lineas.get(lineas.size() - 1), 292, 535);
+
+        // Restaura el contexto
+        g2d.setTransform(old);
+
+        return PAGE_EXISTS;
     }
-    
-    public double getImageableX() {
-      return 0.0D;
-    }
-    
-    public double getImageableY() {
-      return 0.0D;
-    }
-    
-    public double getImageableWidth() {
-      return this.width;
-    }
-    
-    public double getImageableHeight() {
-      return this.height;
-    }
-  }
 }

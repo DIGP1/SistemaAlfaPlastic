@@ -768,6 +768,7 @@ public class Ventas extends javax.swing.JPanel {
         lblError = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
+        btnPrintCurrent1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(750, 560));
 
@@ -1577,6 +1578,13 @@ public class Ventas extends javax.swing.JPanel {
 
         jCheckBox1.setText("En tabla temporal");
 
+        btnPrintCurrent1.setText("Imprimir");
+        btnPrintCurrent1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintCurrent1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -1590,7 +1598,9 @@ public class Ventas extends javax.swing.JPanel {
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnPrintCurrent1)
+                .addContainerGap())
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
@@ -1601,7 +1611,8 @@ public class Ventas extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(txtNumeroPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar)
-                    .addComponent(jCheckBox1))
+                    .addComponent(jCheckBox1)
+                    .addComponent(btnPrintCurrent1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
         );
@@ -2101,8 +2112,8 @@ public class Ventas extends javax.swing.JPanel {
                     
                     productDetail.add(quitarCerosNoSignificativos(Float.parseFloat(product.get(i).get(1).toString())));
                     productDetail.add(productName);
-                    productDetail.add("$"+pu);
-                    productDetail.add("$"+pt);
+                    productDetail.add("$"+redondeo(Double.parseDouble(pu)));
+                    productDetail.add("$"+redondeo(Double.parseDouble(pt)));
                     
                     productFactura.add(productDetail);
                     list.add("");
@@ -2145,6 +2156,10 @@ public class Ventas extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnCancelarVentaActionPerformed
 
+    private void btnPrintCurrent1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintCurrent1ActionPerformed
+        
+    }//GEN-LAST:event_btnPrintCurrent1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCarrito;
@@ -2164,6 +2179,7 @@ public class Ventas extends javax.swing.JPanel {
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrintAll;
     private javax.swing.JButton btnPrintCurrent;
+    private javax.swing.JButton btnPrintCurrent1;
     private javax.swing.JButton btnRestablecer;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

@@ -1026,6 +1026,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnPrintCurrent1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel10" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -1039,6 +1041,7 @@
                           <Component id="txtNumeroPedido" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnPrintCurrent1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel10" pref="490" max="32767" attributes="0"/>
@@ -1512,6 +1515,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="En tabla temporal"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnPrintCurrent1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Imprimir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrintCurrent1ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
