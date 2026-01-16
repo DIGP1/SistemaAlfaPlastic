@@ -3,7 +3,7 @@
  */
 
 package com.mycompany.sistemaventas;
-import forms.*;
+import forms.PrincipalModerno;
 /**
  *
  * @author Diego
@@ -11,7 +11,8 @@ import forms.*;
 public class SistemaVentas {
 
     public static void main(String[] args) {
-        Principal prin = new Principal();
+        //Principal prin = new Principal();
+        PrincipalModerno prin = new PrincipalModerno();
         prin.show(true);
     }
 }

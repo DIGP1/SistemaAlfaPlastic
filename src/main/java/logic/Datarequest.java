@@ -8,14 +8,12 @@ package logic;
  *
  * @author Diego
  */
-import forms.Clientes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 public class Datarequest {
     private DatabaseConnection dbConnection = new DatabaseConnection();
@@ -46,9 +44,9 @@ public class Datarequest {
          List<List<Object>> client = new ArrayList<>();
          String sql = "";
         if(!"".equals(filter)){
-             sql = "SELECT * FROM tbClient WHERE "+filter+" LIKE '" + Dato + "%'";
+             sql = "SELECT * FROM tbClient WHERE "+filter+" LIKE '%" + Dato + "%'";
         }else{
-            sql = "SELECT * FROM tbClient WHERE fullname LIKE '" + Dato + "%'";
+            sql = "SELECT * FROM tbClient WHERE fullname LIKE '%" + Dato + "%'";
         }
        
         try(Connection conn = dbConnection.connect();
